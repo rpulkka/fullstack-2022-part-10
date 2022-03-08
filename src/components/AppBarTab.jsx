@@ -1,9 +1,5 @@
-import { Pressable, StyleSheet, View } from 'react-native'
+import { Pressable } from 'react-native'
 import Text from './Text'
-
-const styles = StyleSheet.create({
-  
-})
 
 const AppBarTab = () => {
   return (
