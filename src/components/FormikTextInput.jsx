@@ -10,12 +10,16 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     fontSize: theme.fontSizes.heading,
-    margin: 10,
+    marginTop: 20,
+    marginHorizontal: 10,
     padding: 20,
     width: '95%'
   },
   errorText: {
-    marginTop: 5
+    color: theme.colors.error,
+    fontSize: theme.fontSizes.heading,
+    marginTop: 5,
+    paddingHorizontal: 10
   }
 })
 
