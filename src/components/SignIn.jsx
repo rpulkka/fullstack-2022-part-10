@@ -7,22 +7,18 @@ import useSignIn from '../hooks/useSignIn'
 import FormikTextInput from './FormikTextInput'
 import theme from '../theme'
 
-const SignIn = () => {
+const styles = StyleSheet.create({
+  button: {
+    margin: 10,
+    padding: 20,
+    width: '95%',
+    borderRadius: 5,
+    backgroundColor: theme.colors.primary,
+    alignItems: 'center'
+  },
+})
 
-  const [signIn] = useSignIn()
-  const navigate = useNavigate()
-
-  const styles = StyleSheet.create({
-    button: {
-      margin: 10,
-      padding: 20,
-      width: '95%',
-      borderRadius: 5,
-      backgroundColor: theme.colors.primary,
-      alignItems: 'center'
-    },
-  })
-
+export const SignInContainer = ({ onSubmit }) => {
   const SignInForm = ({ onSubmit }) => {
     return (
       <View>
@@ -38,18 +34,6 @@ const SignIn = () => {
   const initialValues = {
     username: '',
     password: '',
-  };
-
-  const onSubmit = async (values) => {
-    const { username, password } = values
-
-    try {
-      const { data } = await signIn({ username, password })
-      console.log(data)
-      navigate('/')
-    } catch (e) {
-      console.log(e)
-    }
   }
 
   const validationSchema = yup.object().shape({
@@ -65,7 +49,27 @@ const SignIn = () => {
     <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
       {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
     </Formik>
-  );
+  )
+}
+
+const SignIn = () => {
+
+  const [signIn] = useSignIn()
+  const navigate = useNavigate()
+
+  const onSubmit = async (values) => {
+    const { username, password } = values
+
+    try {
+      const { data } = await signIn({ username, password })
+      console.log(data)
+      navigate('/')
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  return <SignInContainer onSubmit={onSubmit}></SignInContainer>
 }
 
 export default SignIn
