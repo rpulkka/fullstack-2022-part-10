@@ -12,7 +12,7 @@ const RepositoryItemFooter = (props) => {
       padding: 10,
       alignItems: 'center'
     }
-  })  
+  })
 
   const roundToThousands = (count) => {
     if (count < 1000) {
@@ -27,7 +27,7 @@ const RepositoryItemFooter = (props) => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID='repositoryItemFooter'>
       <View style={styles.item}>
         <Text fontSize='heading' fontWeight='bold'>{roundToThousands(props.repository.stargazersCount)}</Text>
         <Text color='textSecondary' fontSize='heading'>Stars</Text>
