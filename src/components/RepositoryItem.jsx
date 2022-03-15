@@ -23,7 +23,8 @@ const RepositoryItem = (props) => {
       borderRadius: 5
     },
     paragraphContainer: {
-      paddingHorizontal: 20, flex: 5
+      paddingHorizontal: 20,
+      flex: 5
     },
     title: {
       marginBottom: 10
