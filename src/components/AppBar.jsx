@@ -28,11 +28,16 @@ const AppBar = () => {
     <View style={styles.container}>
       <ScrollView horizontal style={styles.scrollView}>
         <AppBarTab title={'Repositories'} link={'/'} />
+        {
+          signedIn !== null && signedIn !== undefined ?
+            <AppBarTab title={'Create a review'} link={'/rate'} />
+            : null
+        }
         <AppBarTab title={'Sign in'} link={'/signin'} />
         {
           signedIn !== null && signedIn !== undefined ?
             <Pressable onPress={async () => { await signOut() }}>
-                <Text color='white' fontWeight='bold' fontSize='heading' style={{ padding: 20 }}>{'Sign out'}</Text>
+              <Text color='white' fontWeight='bold' fontSize='heading' style={{ padding: 20 }}>{'Sign out'}</Text>
             </Pressable>
             : null
         }
