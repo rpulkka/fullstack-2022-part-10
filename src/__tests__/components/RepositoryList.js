@@ -47,7 +47,14 @@ describe('RepositoryList', () => {
         ],
       }
 
-      const { getAllByTestId } = render(<RepositoryListContainer repositories={repositories} />)
+      const mockNavigate = jest.fn()
+
+      const { getAllByTestId } = render(<RepositoryListContainer
+        repositoriesCreatedAt={repositories}
+        repositoriesRatingDesc={repositories}
+        repositoriesRatingAsc={repositories}
+        navigate={mockNavigate}
+      />)
 
       const repositoryItems = getAllByTestId('repositoryItem')
       const [firstRepositoryItem, secondRepositoryItem] = repositoryItems
