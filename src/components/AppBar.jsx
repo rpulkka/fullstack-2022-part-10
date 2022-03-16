@@ -33,7 +33,16 @@ const AppBar = () => {
             <AppBarTab title={'Create a review'} link={'/rate'} />
             : null
         }
-        <AppBarTab title={'Sign in'} link={'/signin'} />
+        {
+          signedIn === null || signedIn === undefined ?
+            <AppBarTab title={'Sign in'} link={'/signin'} />
+            : null
+        }
+        {
+          signedIn === null || signedIn === undefined ?
+            <AppBarTab title={'Sign up'} link={'/signup'} />
+            : null
+        }
         {
           signedIn !== null && signedIn !== undefined ?
             <Pressable onPress={async () => { await signOut() }}>
