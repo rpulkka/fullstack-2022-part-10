@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { FlatList, Pressable, StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
+import { Searchbar } from 'react-native-paper'
 import { Picker } from '@react-native-picker/picker'
+import { useDebounce } from 'use-debounce'
 import RepositoryItem from './RepositoryItem'
 import useRepositories from '../hooks/useRepositories'
 
@@ -11,67 +13,81 @@ const styles = StyleSheet.create({
   },
   picker: {
     margin: 20,
+  },
+  searchBar: {
+    borderRadius: 5,
+    marginTop: 20,
+    marginHorizontal: 10,
+    width: '95%'
   }
 })
 
 const ItemSeparator = () => <View style={styles.separator} />
 
-export const RepositoryListContainer = ({ repositoriesCreatedAt, repositoriesRatingDesc, repositoriesRatingAsc, navigate }) => {
+export class RepositoryListContainer extends React.Component {
 
-  const [order, setOrder] = useState('latest')
+  renderHeader = () => {
 
-  let repositoryNodes = repositoriesCreatedAt && order === 'latest'
-    ? repositoriesCreatedAt.edges.map(edge => edge.node)
-    : repositoriesRatingDesc && order === 'rated_desc'
-      ? repositoriesRatingDesc.edges.map(edge => edge.node)
-      : repositoriesRatingAsc && order === 'rated_asc'
-        ? repositoriesRatingAsc.edges.map(edge => edge.node)
-        : []
+    const props = this.props
 
-  const PickerComponent = () => {
     return (
-      <Picker
-        selectedValue={order}
-        onValueChange={itemValue => {
-          setOrder(itemValue)
-
-        }}
-        style={styles.picker}
-      >
-        <Picker.Item label="Latest repositories" value="latest" />
-        <Picker.Item label="Highest rated repositories" value="rated_desc" />
-        <Picker.Item label="Lowest rated repositories" value="rated_asc" />
-      </Picker>
+      <View>
+        <Searchbar
+          placeholder='Search repositories'
+          onChangeText={value => props.setFilter(value)}
+          value={props.filter}
+          style={styles.searchBar}
+        />
+        <Picker
+          selectedValue={props.order}
+          onValueChange={itemValue => {
+            props.setOrder(itemValue)
+          }}
+          style={styles.picker}
+        >
+          <Picker.Item label='Latest repositories' value={'CREATED_AT DESC'} />
+          <Picker.Item label='Highest rated repositories' value={'RATING_AVERAGE DESC'} />
+          <Picker.Item label='Lowest rated repositories' value={'RATING_AVERAGE ASC'} />
+        </Picker>
+      </View>
     )
   }
 
-  return (
-    <FlatList
-      data={repositoryNodes}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={({ item }) => (
-        <Pressable onPress={() => navigate('/repository/' + item.id)}>
-          <RepositoryItem repository={item} />
-        </Pressable>
-      )}
-      ListHeaderComponent={() => <PickerComponent />}
-    />
-  )
+  render() {
+    return (
+      <FlatList
+        data={this.props.repositoryNodes}
+        ItemSeparatorComponent={ItemSeparator}
+        renderItem={({ item }) => (
+          <Pressable onPress={() => this.props.navigate('/repository/' + item.id)}>
+            <RepositoryItem repository={item} />
+          </Pressable>
+        )}
+        ListHeaderComponent={this.renderHeader}
+      />
+    )
+  }
 }
 
 const RepositoryList = () => {
 
-  const repositoriesCreatedAt = useRepositories({ orderBy: 'CREATED_AT', orderDirection: 'DESC'}).repositories
-  const repositoriesRatingDesc = useRepositories({ orderBy: 'RATING_AVERAGE', orderDirection: 'DESC'}).repositories
-  const repositoriesRatingAsc = useRepositories({ orderBy: 'RATING_AVERAGE', orderDirection: 'ASC'}).repositories
-
+  const [filter, setFilter] = useState('')
+  const [searchKeyword] = useDebounce(filter, 1000)
+  const [order, setOrder] = useState('CREATED_AT DESC')
+  const { repositories } = useRepositories({ orderBy: order.split(" ")[0], orderDirection: order.split(" ")[1] }, searchKeyword)
   const navigate = useNavigate()
 
+  let repositoryNodes = repositories
+    ? repositories.edges.map(edge => edge.node)
+    : []
+
   return <RepositoryListContainer
-    repositoriesCreatedAt={repositoriesCreatedAt}
-    repositoriesRatingDesc={repositoriesRatingDesc}
-    repositoriesRatingAsc={repositoriesRatingAsc}
     navigate={navigate}
+    filter={filter}
+    setFilter={setFilter}
+    order={order}
+    setOrder={setOrder}
+    repositoryNodes={repositoryNodes}
   />
 }
 

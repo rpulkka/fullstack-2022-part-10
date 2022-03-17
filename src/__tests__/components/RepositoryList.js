@@ -47,13 +47,17 @@ describe('RepositoryList', () => {
         ],
       }
 
-      const mockNavigate = jest.fn()
+      const mockFunction1 = jest.fn()
+      const mockFunction2 = jest.fn()
+      const mockFunction3 = jest.fn()
 
       const { getAllByTestId } = render(<RepositoryListContainer
-        repositoriesCreatedAt={repositories}
-        repositoriesRatingDesc={repositories}
-        repositoriesRatingAsc={repositories}
-        navigate={mockNavigate}
+        navigate={mockFunction1}
+        filter={''}
+        setFilter={mockFunction2}
+        order={'RATING_AVERAGE DESC'}
+        setOrder={mockFunction3}
+        repositoryNodes={repositories.edges.map(edge => edge.node)}
       />)
 
       const repositoryItems = getAllByTestId('repositoryItem')
