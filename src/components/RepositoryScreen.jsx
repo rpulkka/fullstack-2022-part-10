@@ -28,7 +28,11 @@ const RepositoryScreen = () => {
 
   let { id } = useParams()
   const { repository } = useRepository(id)
-  const { reviews } = useReviews(id)
+  const { reviews, fetchMore } = useReviews({ repositoryId: id, first: 5 })
+
+  const onEndReach = () => {
+    fetchMore()
+  }
 
   if (reviews === undefined || repository === undefined || reviews === null || repository === null) {
     return <></>
@@ -40,6 +44,8 @@ const RepositoryScreen = () => {
         renderItem={({ item }) => <ReviewItem review={item.node} />}
         keyExtractor={(item) => item.node.id}
         ListHeaderComponent={() => <RepositoryInfo repository={repository} />}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
       />
     )
   }
