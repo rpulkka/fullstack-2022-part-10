@@ -3,7 +3,7 @@ import { format } from 'date-fns'
 import theme from '../theme'
 import Text from './Text'
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ review, onList }) => {
 
   const styles = StyleSheet.create({
     container: {
@@ -38,7 +38,7 @@ const ReviewItem = ({ review }) => {
         <Text color={'primary'} fontWeight={'bold'} fontSize={'heading'} style={styles.iconText}>{review.rating}</Text>
       </View>
       <View style={styles.textContainer}>
-        <Text fontSize={'subheading'} fontWeight={'bold'}>{review.user.username}</Text>
+        <Text fontSize={'subheading'} fontWeight={'bold'}>{ onList ? review.repository.name : review.user.username }</Text>
         <Text color={'textSecondary'} style={styles.dateText}>{format(new Date(review.createdAt), 'dd.MM.yyyy')}</Text>
         <Text>{review.text}</Text>
       </View>

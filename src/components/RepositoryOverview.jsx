@@ -24,7 +24,7 @@ const RepositoryInfo = (repositoryObject) => {
   )
 }
 
-const RepositoryScreen = () => {
+const RepositoryOverview = () => {
 
   let { id } = useParams()
   const { repository } = useRepository(id)
@@ -41,7 +41,7 @@ const RepositoryScreen = () => {
       <FlatList
         data={reviews}
         ItemSeparatorComponent={ItemSeparator}
-        renderItem={({ item }) => <ReviewItem review={item.node} />}
+        renderItem={({ item }) => <ReviewItem review={item.node} onList={false} />}
         keyExtractor={(item) => item.node.id}
         ListHeaderComponent={() => <RepositoryInfo repository={repository} />}
         onEndReached={onEndReach}
@@ -51,4 +51,4 @@ const RepositoryScreen = () => {
   }
 }
 
-export default RepositoryScreen
+export default RepositoryOverview

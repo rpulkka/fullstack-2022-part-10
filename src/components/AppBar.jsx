@@ -34,6 +34,11 @@ const AppBar = () => {
             : null
         }
         {
+          signedIn !== null && signedIn !== undefined ?
+            <AppBarTab title={'My reviews'} link={'/reviews'} />
+            : null
+        }
+        {
           signedIn === null || signedIn === undefined ?
             <AppBarTab title={'Sign in'} link={'/signin'} />
             : null

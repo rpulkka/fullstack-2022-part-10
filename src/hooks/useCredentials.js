@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client'
 import { GET_CREDENTIALS } from '../graphql/queries'
 
-const useCredentials = () => {
-  const { data, error, loading } = useQuery(GET_CREDENTIALS, { fetchPolicy: 'cache-and-network' })
+const useCredentials = (variables) => {
+  const { data, error, loading } = useQuery(GET_CREDENTIALS, { variables, fetchPolicy: 'cache-and-network' })
 
   if (loading) {
     return {}
