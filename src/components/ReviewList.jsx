@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet, View } from 'react-native'
 import useCredentials from '../hooks/useCredentials'
-import ReviewItem from './ReviewItem'
+import ReviewContainer from './ReviewContainer'
 
 const styles = StyleSheet.create({
   separator: {
@@ -15,7 +15,7 @@ const ItemSeparator = () => <View style={styles.separator} />
 
 const ReviewList = () => {
 
-  const { credentials } = useCredentials({ includeReviews: true })
+  const { credentials, refetch } = useCredentials({ includeReviews: true })
 
   if (credentials === undefined || credentials === null) {
     return <></>
@@ -24,7 +24,7 @@ const ReviewList = () => {
       <FlatList
         data={credentials.reviews.edges}
         ItemSeparatorComponent={ItemSeparator}
-        renderItem={({ item }) => <ReviewItem review={item.node} onList={true} />}
+        renderItem={({ item }) => <ReviewContainer review={item.node} refetch={refetch} />}
         keyExtractor={(item) => item.node.id}
       />
     )

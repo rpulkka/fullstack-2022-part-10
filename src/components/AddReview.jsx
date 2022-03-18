@@ -22,10 +22,10 @@ export const AddReviewContainer = ({ onSubmit }) => {
   const AddReviewForm = ({ onSubmit }) => {
     return (
       <View>
-        <FormikTextInput name="owner" placeholder="Repository owner name" />
-        <FormikTextInput name="name" placeholder="Repository name" />
-        <FormikTextInput name="rating" placeholder="Rating between 0 and 100" />
-        <FormikTextInput name="review" placeholder="Review" multiline />
+        <FormikTextInput name='owner' placeholder='Repository owner name' />
+        <FormikTextInput name='name' placeholder='Repository name' />
+        <FormikTextInput name='rating' placeholder='Rating between 0 and 100' />
+        <FormikTextInput name='review' placeholder='Review' multiline />
         <Pressable onPress={onSubmit} style={styles.button}>
           <Text color='white' fontWeight='bold' fontSize='heading'>Create a review</Text>
         </Pressable>

@@ -76,7 +76,7 @@ const RepositoryList = () => {
   const [filter, setFilter] = useState('')
   const [searchKeyword] = useDebounce(filter, 1000)
   const [order, setOrder] = useState('CREATED_AT DESC')
-  const { repositories, fetchMore } = useRepositories({orderBy: order.split(" ")[0], orderDirection: order.split(" ")[1], searchKeyword: searchKeyword, first: 8})
+  const { repositories, fetchMore } = useRepositories({orderBy: order.split(' ')[0], orderDirection: order.split(' ')[1], searchKeyword: searchKeyword, first: 8})
   const navigate = useNavigate()
 
   const onEndReach = () => {

@@ -23,9 +23,9 @@ export const SignUpContainer = ({ onSubmit }) => {
   const SignUpForm = ({ onSubmit }) => {
     return (
       <View>
-        <FormikTextInput name="username" placeholder="Username" />
-        <FormikTextInput name="password" placeholder="Password" secure />
-        <FormikTextInput name="passwordConfirmation" placeholder="Password confirmation" secure />
+        <FormikTextInput name='username' placeholder='Username' />
+        <FormikTextInput name='password' placeholder='Password' secure />
+        <FormikTextInput name='passwordConfirmation' placeholder='Password confirmation' secure />
         <Pressable onPress={onSubmit} style={styles.button}>
           <Text color='white' fontWeight='bold' fontSize='heading'>Sign up</Text>
         </Pressable>

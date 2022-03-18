@@ -25,7 +25,7 @@ const ReviewItem = ({ review, onList }) => {
       paddingVertical: 5
     },
     textContainer: {
-      flex: 8
+      flex: 7
     },
     dateText: {
       marginVertical: 5

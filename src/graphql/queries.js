@@ -55,6 +55,7 @@ export const GET_CREDENTIALS = gql`
             rating
             createdAt
             repository {
+              id
               name
             }
           }
